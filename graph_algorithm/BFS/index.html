@@ -25,22 +25,47 @@
     <div class="container my-5">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
-          <li class="breadcrumb-item active"><a href="#">Graph</a></li>
+            <li class="breadcrumb-item"><a href="/graph_algorithm/index.html">Graph</a></li>
+          <li class="breadcrumb-item active"><a href="/graph_algorithm/BFS/index.html">BFS</a></li>
         </ol>
       </nav>
     </div>
     <!-- Основной контент -->
     <div class="container mt-4 ">
-        <h1>Это странца по алгоритмам основаных на графах</h1>
+        <h1>Это страница с алгоритмом основанном на поиске в ширину, визуализация и постройка маршрута</h1>
         <p>--(что то там про графы) блалаллааллалл большой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текст </p>
         <p>большой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текст</p>
         
         
     </div>
 
-    <div class="border-bottom border-dark my-4"></div>
-     <a href="/graph_algorithm/BFS/index.html">bfs</a>
-     <a href="#">dfs</a>
+    <h2>Введите матрицу</h2>
+    <textarea id="matrixInput" rows="4" cols="4"></textarea>
+    <button onclick="sendMatrix()">Отправить на сервер</button>
+  
+    <h2>Полученная матрица</h2>
+    <div id="resultMatrix"></div>
+  
+    <script>
+      async function sendMatrix() {
+        const matrixInput = document.getElementById('matrixInput').value;
+  
+        // Отправка матрицы на сервер
+        const response = await fetch('/process_matrix', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ matrix: matrixInput }),
+        });
+  
+        // Получение ответа от сервера
+        const result = await response.json();
+  
+        // Отображение полученной матрицы
+        document.getElementById('resultMatrix').innerText = result.matrix;
+      }
+    </script>
     <div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
 
     <!-- Bootstrap JS (optional) -->
