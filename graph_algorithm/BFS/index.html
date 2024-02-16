@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
 </head>
 <body>
   <main class="container mt-4 border border-primary">
@@ -40,9 +41,84 @@
     </div>
 
     <h2>Введите матрицу</h2>
-    <textarea id="matrixInput" rows="4" cols="4"></textarea>
-    <button onclick="sendMatrix()">Отправить на сервер</button>
-  
+    <textarea id="matrixInput" rows="10" cols="10">0000000000
+0000000000
+0000000000
+0000000000
+0000000000
+0000000000
+0000000000
+0000000000
+0000000000
+0000000000</textarea>
+    <button class="btn btn-primary" onclick="sendMatrix()">Отправить на сервер</button>
+      
+    <div class="container">
+      <h2>Введите матрицу:</h2>
+    <table id="matrixTable" class="table">
+        <!-- Тут будут ячейки матрицы -->
+    </table>
+    <button class="btn btn-primary" onclick="addRow()">Добавить строку</button>
+    <button class="btn btn-primary" onclick="addColumn()">Добавить столбец</button>
+    <button class="btn btn-primary" onclick="getMatrix()">Получить матрицу</button>
+
+    <script>
+      function createSelect() {
+        // Создаем новый элемент select
+        var select = document.createElement('select');
+        // Добавляем опции от 1 до 5
+        for (var i = 1; i <= 5; i++) {+
+          var option = document.createElement('option');
+          option.text = i;
+          option.value = i;
+          select.appendChild(option);
+        }
+        return select;
+      }
+
+      // Пример использования:
+      var cell = document.getElementById('yourCellId');
+      cell.appendChild(createSelect());
+      function addRow() {
+          const table = document.getElementById('matrixTable');
+          const rowCount = table.rows.length;
+          const cellCount = rowCount > 0 ? table.rows[0].cells.length : 0;
+          const newRow = table.insertRow(rowCount);
+          for (let i = 0; i < cellCount; i++) {
+              const cell = newRow.insertCell(i);
+              cell.appendChild(createSelect());
+              //cell.innerHTML = '<input type="text">';
+          }
+      }
+
+      function addColumn() {
+          const table = document.getElementById('matrixTable');
+          const rowCount = table.rows.length;
+          const cellCount = rowCount > 0 ? table.rows[0].cells.length : 0;
+          for (let i = 0; i < rowCount; i++) {
+              const newRow = table.rows[i];
+              const newCell = newRow.insertCell(cellCount);
+              cell.appendChild(createSelect());
+              //newCell.innerHTML = '<input type="text">';
+          }
+      }
+
+      function getMatrix() {
+          const table = document.getElementById('matrixTable');
+          const matrix = [];
+          for (let i = 0; i < table.rows.length; i++) {
+              const row = [];
+              for (let j = 0; j < table.rows[i].cells.length; j++) {
+                  const cell = table.rows[i].cells[j].querySelector('input');
+                  row.push(Number(cell.value));
+              }
+              matrix.push(row);
+          }
+          console.log(matrix); // Вы можете использовать этот массив для дальнейшей обработки
+      }
+  </script>
+    </div>  
+
     <h2>Полученная матрица</h2>
     <div id="resultMatrix"></div>
   
@@ -51,7 +127,7 @@
         const matrixInput = document.getElementById('matrixInput').value;
   
         // Отправка матрицы на сервер
-        const response = await fetch('/process_matrix', {
+        const response = await fetch('/graph_algorithm/BFS/process_matrix', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -2,7 +2,21 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../alog_site_backend"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "algo_site",
+		"liveServer.settings.ignoreFiles": [
+
+			".vscode/**",
+			"**/*.scss",
+			"**/*.sass",
+			"**/*.ts"
+		],
+
+		"liveServer.settings.port": 0
+	}
 }
