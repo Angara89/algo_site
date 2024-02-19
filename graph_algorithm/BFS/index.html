@@ -8,123 +8,279 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      /* Создает 10 колонок равной ширины */
+      gap: 1px;
+      /* Расстояние между клетками */
+    }
 
+    .grid-item {
+      width: calc(100% / 10 - 1px);
+      /* Вычисляем ширину каждой клетки */
+      aspect-ratio: 1 / 1;
+      /* Вычисляем высоту каждой клетки (в зависимости от ширины экрана) */
+      background-color: #ffffff;
+      /* Цвет фона клетки */
+      border: 1px solid #000000;
+      /* Граница клетки */
+      padding-right: 100px;
+    }
+  </style>
 </head>
 
 <body>
   <main class="container mt-4 border border-primary">
     <!-- Навигационная панель -->
-    <div class="container">
-      <header class="d-flex justify-content-center py-3">
-        <ul class="nav nav-pills border border-primary">
-          <li class="nav-item"><a href="/index.html" class="nav-link " aria-current="page">Home</a></li>
-          <li class="nav-item"><a href="/graph_algorithm/index.html" class="nav-link active">Graph</a></li>
-          <li class="nav-item"><a href="/iterations_alghorithm/index.html" class="nav-link">Iterations algorithms</a>
-          </li>
-          <li class="nav-item"><a href="#" class="nav-link">Othres</a></li>
-        </ul>
-      </header>
-    </div>
 
-    <div class="container my-5">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
-          <li class="breadcrumb-item"><a href="/graph_algorithm/index.html">Graph</a></li>
-          <li class="breadcrumb-item active"><a href="/graph_algorithm/BFS/index.html">BFS</a></li>
-        </ol>
-      </nav>
-    </div>
-    <!-- Основной контент -->
-    <div class="container mt-4 ">
-      <h1>Это страница с алгоритмом основанном на поиске в ширину, визуализация и постройка маршрута</h1>
-      <p>--(что то там про графы) блалаллааллалл большой текст большой текстбольшой текстбольшой текстбольшой
-        текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой
-        текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст
-        большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой
-        текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой
-        текстбольшой текст </p>
-      <p>большой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой
-        текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст
-        большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой
-        текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой
-        текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст
-        большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой
-        текст</p>
-
-
-    </div>
-
-    <h2>Введите матрицу</h2>
-    <textarea id="matrixInput" rows="11" cols="11">0000000000
-0000000000
-0000000000
-0000000000
-0000000000
-0000000000
-0000000000
-0000000000
-0000000000
-0000000000</textarea>
-    <button class="btn btn-primary" onclick="sendMatrix()">Отправить на сервер</button>
-
-
-    <h2>Полученная матрица</h2>
-    <div id="resultMatrix"></div>
-
-    <script>
-      async function sendMatrix() {
-        const matrixInput = document.getElementById('matrixInput').value;
-
-        // Разбить строку на строки
-        var lines = matrixInput.split('\n');
-
-        // Создать пустую матрицу
-        var matrixInputProc = [];
-
-        // Пройтись по каждой строке
-        for (var i = 0; i < lines.length; i++) {
-          // Разбить строку на отдельные цифры
-          var row = lines[i].split('');
-          // Преобразовать каждую цифру в число
-          row = row.map(function (element) {
-            var parsed = parseInt(element);
-            return isNaN(parsed) ? element : parsed;
-          });
-          // Добавить строку в матрицу
-          matrixInputProc.push(row);
-        }
-        // Отправка матрицы на сервер
-        const response = await fetch('/graph_algorithm/BFS/process_matrix', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ matrix: matrixInputProc }),
-        });
-
-
-
-        // Получение ответа от сервера
-        const result = await response.json();
-
-        function matrixToText(matrix) {
-          // Проходим по каждой строке матрицы
-          const textRows = matrix.map(row => row.join('')); // Преобразуем каждую строку массива в строку с разделителями пробелами
-          return textRows.join('\n'); // Объединяем строки с разделителями \n
-        }
-        const matrixText = matrixToText(result.matrix);
-        // Отображение полученной матрицы
-        document.getElementById('resultMatrix').innerText = matrixText;
-      }
-    </script>
     <div>
-      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    </div>
+      <div class="container">
+        <header class="d-flex justify-content-center py-3">
+          <ul class="nav nav-pills border border-primary">
+            <li class="nav-item"><a href="/index.html" class="nav-link " aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="/graph_algorithm/index.html" class="nav-link active">Graph</a></li>
+            <li class="nav-item"><a href="/iterations_alghorithm/index.html" class="nav-link">Iterations algorithms</a>
+            </li>
+            <li class="nav-item"><a href="#" class="nav-link">Othres</a></li>
+          </ul>
+        </header>
+      </div>
 
+      <div class="container my-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
+            <li class="breadcrumb-item"><a href="/graph_algorithm/index.html">Graph</a></li>
+            <li class="breadcrumb-item active"><a href="/graph_algorithm/BFS/index.html">BFS</a></li>
+          </ol>
+        </nav>
+      </div>
+      <!-- Основной контент -->
+      <div class="container mt-4 ">
+        <h1>Это страница с алгоритмом основанном на поиске в ширину, визуализация и постройка маршрута</h1>
+        <p>--(что то там про графы) блалаллааллалл большой текст большой текстбольшой текстбольшой текстбольшой
+          текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой
+          текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст
+          большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой
+          текстбольшой
+          текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой текстбольшой
+          текстбольшой текст </p>
+        <p>большой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой
+          текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст
+          большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой
+          текстбольшой
+          текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой
+          текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой текстбольшой текстбольшой текст
+          большой текстбольшой текстбольшой текстбольшой текстбольшой текст большой текстбольшой текстбольшой
+          текстбольшой
+          текст</p>
+
+      </div>
+
+    </div>
+    <div hidden>
+      <h2>Введите матрицу</h2>
+      0000000000
+      0000000000
+      0000000000
+      0000000000
+      0000000000
+      0000000000
+      0000000000
+      0000000000
+      0000000000</textarea>
+      <button class="btn btn-primary" onclick="sendMatrix()">Отправить на сервер</button>
+
+
+      <h2>Полученная матрица</h2>
+      <div id="resultMatrix"></div>
+
+      <script>
+        async function sendMatrix() {
+          const matrixInput = document.getElementById('matrixInput').value;
+
+          // Разбить строку на строки
+          var lines = matrixInput.split('\n');
+
+          // Создать пустую матрицу
+          var matrixInputProc = [];
+
+          // Пройтись по каждой строке
+          for (var i = 0; i < lines.length; i++) {
+            // Разбить строку на отдельные цифры
+            var row = lines[i].split('');
+            // Преобразовать каждую цифру в число
+            row = row.map(function (element) {
+              var parsed = parseInt(element);
+              return isNaN(parsed) ? element : parsed;
+            });
+            // Добавить строку в матрицу
+            matrixInputProc.push(row);
+          }
+          // Отправка матрицы на сервер
+          const response = await fetch('/graph_algorithm/BFS/process_matrix', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ matrix: matrixInputProc }),
+          });
+
+
+
+          // Получение ответа от сервера
+          const result = await response.json();
+
+          function matrixToText(matrix) {
+            // Проходим по каждой строке матрицы
+            const textRows = matrix.map(row => row.join('')); // Преобразуем каждую строку массива в строку с разделителями пробелами
+            return textRows.join('\n'); // Объединяем строки с разделителями \n
+          }
+          const matrixText = matrixToText(result.matrix);
+          // Отображение полученной матрицы
+          document.getElementById('resultMatrix').innerText = matrixText;
+        }
+      </script>
+
+    </div>
+    <div class="container mt-5 ">
+      <!-- Color picker panel -->
+      <div class="mb-3">
+        <button type="button" class="btn btn-primary" onclick="setColor('green')">Start cell</button>
+        <button type="button" class="btn btn-primary" onclick="setColor('red')">End cell</button>
+        <button type="button" class="btn btn-primary" onclick="setColor('black')">Not allowed cell</button>
+        
+        <button type="button" class="btn btn-primary" onclick="setColor('white')">Allowed cell</button>
+        <hr>
+        <button type="button" class="btn btn-primary" onclick="processGrid()">Send matrix</button>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="grid-container" id="grid">
+              <!-- Клетки будут добавлены здесь динамически с помощью JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script>
+
+      var nowColor = 'white'
+      var countEnds = 0
+      var countStarts = 0
+      function setColor(color) {
+        nowColor = color
+      }
+
+      function clickCell() {
+        if (nowColor == 'red') {
+          if (countEnds == 1) {
+            return;
+          }
+          countEnds = 1
+        }
+        if (nowColor == 'green') {
+          if (countStarts == 1) {
+            return;
+          }
+          countStarts = 1
+        }
+        if (this.style.backgroundColor == 'red' && nowColor != 'red') {
+          countEnds = 0
+        }
+        if (this.style.backgroundColor == 'green' && nowColor != 'green') {
+          countStarts = 0
+        }
+        this.style.backgroundColor = nowColor;
+      }
+      function createGrid() {
+        const gridContainer = document.getElementById('grid');
+
+        for (let i = 0; i < 100; i++) { // Создаем 100 клеток (10x10)
+          const gridItem = document.createElement('div');
+          gridItem.classList.add('grid-item');
+          gridItem.id = i;
+          gridItem.addEventListener('click', clickCell);
+          gridContainer.appendChild(gridItem);
+        }
+      }
+      function processGrid() {
+        const gridItems = document.querySelectorAll('.grid-item');
+        const matrix = [];
+        gridItems.forEach((item, index) => {
+          // Получаем цвет фона каждой ячейки
+          const backgroundColor = item.style.backgroundColor;
+          // Определяем числовое значение на основе цвета
+          let value;
+          switch (backgroundColor) {
+            case 'black':
+              value = 1;
+              break;
+            case 'white':
+              value = 0;
+              break;
+            case 'green':
+              value = 'S';
+              break;
+            case 'red':
+              value = 'E';
+              break;
+            default:
+              value = 0; // Если цвет не определён, установите значение по умолчанию
+              break;
+          }
+          // Добавляем значение в матрицу
+          const rowIndex = Math.floor(index / 10);
+          if (!matrix[rowIndex]) {
+            matrix[rowIndex] = [];
+          }
+          matrix[rowIndex].push(value);
+        });
+        sendMatrix(matrix);
+        // Теперь у вас есть матрица, содержащая числовые значения каждой ячейки сетки
+      }
+      // Вызываем функцию при загрузке страницы
+      window.onload = createGrid;
+    </script>
+          <script>
+            async function changeCollorCell(cell, collor) {
+              cell.style.backgroundColor = collor;
+            }
+            async function sendMatrix(matrixInput) {
+
+              // Отправка матрицы на сервер
+              const response = await fetch('/graph_algorithm/BFS/process_matrix', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ matrix: matrixInput }),
+              });
+
+              // Получение ответа от сервера
+              const result = await response.json();
+              const matrixReady  = result.matrix;      
+              for (var i = 0; i != 10; ++i) {
+                for (var j = 0; j != 10; ++j) {
+                  if (matrixReady[i][j] == 3) {
+                    var index = j + i * 10;
+                    changeCollorCell(document.getElementById(index), 'yellow'); 
+                  }
+                }
+              }
+            }
+          </script>
     <!-- Bootstrap JS (optional) -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <div>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
   </main>
 </body>
 
